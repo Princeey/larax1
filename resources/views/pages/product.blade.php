@@ -40,21 +40,24 @@
                     <div class="mb-1">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" id="name" name="name">
+                        <div id="name_error" class="text-danger"></div>
                     </div>
                     <div class="mb-1">
                         <label for="imageURL" class="form-label">Image Link</label>
                         <textarea class="form-control" id="imageURL" name="imageURL"></textarea>
+                        <div id="img_error" class="text-danger"></div>
                        
                     </div>
                     <div class="mb-1">
                         <label for="description" class="form-label">Description</label>
                         <textarea class="form-control" id="description" name="description"></textarea>
+                        <div id="description_error" class="text-danger"></div>
                    
                     </div>
                     <div class="mb-1">
                         <label for="price" class="form-label">Price</label>
                         <input type="number" class="form-control" id="price" name="price">
-                        
+                        <div id="price_error" class="text-danger"></div>
                     </div>
                 </div>
                 <div id="addProductMessage"></div>
