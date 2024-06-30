@@ -18,26 +18,7 @@ class ProductController extends Controller
                 ->orWhere('description', 'like', "%{$filter}%");
         }
 
-        $html = "";
-
-        // Generating HTML directly (consider using Blade templates instead)
-        foreach ($products->get() as $prod) {
-            $html .= "
-                <div class='p-6 rounded-lg bg-blue-100 shadow-md w-full max-w-sm'>
-                    <img src='{$prod->imageURL}' class=''>
-                    <h3 class='text-2xl font-semibold mb-2'>{$prod->name}</h3>
-                    <hr class='border-t-2 border-blue-300 mb-2' />
-                    <div class='italic text-gray-600 mb-4'>
-                        {$prod->description}
-                    </div>
-                    <div class='text-3xl text-right text-blue-700 font-bold'>
-                        {$prod->price}
-                    </div>
-                </div>
-            ";
-        }
-        
-        return $html;
+        return view('template._products-list-for-create', ['products' => $products]);
     } 
     // 
     public function store(Request $request)
@@ -59,7 +40,47 @@ class ProductController extends Controller
 
         $products = Product::orderBy('name');
 
+        return view('template._products-list-for-create', ['product'=>$products]);
+    }
+
+    public function edit(Product $product)
+    {
+        $product = Product::find($product->id);
+
+        return view('template._edit-products', ['product' => $product]);
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'imageURL' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $product->update($request->all());
+
+        return redirect('/products');
+    }
+
+
+    public function destroy($id) {
+        $product = Product::find($id);
+        $product->delete();
+
+        $products = Product::orderBy('name');
+
         return view('template._products-list-for-create', ['products'=>$products]);
     }
-    
+
+    public function details(Product $product)
+    {
+        return view('template._product-details', ['products' => $products]);
+    }
+
 }

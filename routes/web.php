@@ -25,4 +25,8 @@ Route::get('/product', function(){ return view('pages.product'); });
 
 
 Route::get('/api/products', [ProductController::class, 'index'])->name('products.index');
-Route::post('/store/products', [ProductController::class, 'store'])->name('products.store');
+Route::post('/store/products', [ProductController::class, 'store'])->name('store.products');
+Route::delete('/products/{id}', [ProductController::class, 'destroy']);
+
+Route::get('/products/{product}/edit', [ProductController::class, 'edit']);
+Route::put('/products/{product}', [ProductController::class, 'update']);
